@@ -1,4 +1,5 @@
 #Repositorio por Sergio Morales
+#Modificado por Othón Berlanga
 
 from random import randrange
 from turtle import *
@@ -21,6 +22,10 @@ def inside(head):
     return -200 < head.x < 190 and -200 < head.y < 190
 
 
+def inside(food):
+    "Return True if head inside boundaries."
+    return -200 < food.x < 190 and -200 < food.y < 190
+
 def move():
     """Move snake forward one segment."""
     head = snake[-1].copy()
@@ -29,6 +34,11 @@ def move():
     if not inside(head) or head in snake:
         square(head.x, head.y, 9, 'red')
         update()
+        return
+    #Prevents food from going out of bounds
+    if not inside(food):
+        food.x =  randrange(-15,15) * 10
+        food.y =  randrange(-15,15) * 10
         return
 
     snake.append(head)
@@ -48,7 +58,11 @@ def move():
     square(food.x, food.y, 9, 'green')
     update()
     ontimer(move, 100)
-
+   #Food Moves
+    if randrange(10) == 0:
+        food.x += (randrange (-1,1))*10
+        food.y += (randrange (-1,1))*10  #awevo_furuló.exe
+    ontimer(move, 100)
 
 setup(420, 420, 370, 0)
 hideturtle()
